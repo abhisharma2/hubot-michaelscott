@@ -7,13 +7,11 @@ expect = chai.expect
 describe 'michaelscott', ->
   beforeEach ->
     @robot =
-      respond: sinon.spy()
       hear: sinon.spy()
 
     require('../src/michaelscott')(@robot)
 
-  it 'registers a respond listener', ->
-    expect(@robot.respond).to.have.been.calledWith(/hello/)
-
-  it 'registers a hear listener', ->
-    expect(@robot.hear).to.have.been.calledWith(/orly/)
+  it 'registers multiple hear listeners', ->
+    # expect(@robot.hear).to.have.been.calledWith(/inspiration/)
+    # expect(@robot.hear).to.have.been.calledWith(/huge/)
+    # expect(@robot.hear).to.have.been.calledWith(/bankruptcy/)

@@ -21,6 +21,10 @@ Then add **hubot-michaelscott** to your `external-scripts.json`:
 ## Sample Interaction
 
 ```
-user1>> hubot hello
-hubot>> hello!
+user1>> that deal we just closed was huge!
+hubot>> That's what she said
+
+user2>> michaelscott inspire me
+hubot>> You know what they say. Fool me once, strike one. But fool me twice… strike three
+
 ```
