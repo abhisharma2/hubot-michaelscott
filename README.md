@@ -2,7 +2,7 @@
 
 Let Michael Scott interject during your most important business conversations
 
-See [`src/michaelscott.coffee`](src/michaelscott.coffee) for full documentation.
+See [`https://github.com/abhisharma2/hubot-michaelscott/blob/master/src/michaelscott.coffee`](src/michaelscott.coffee) for full documentation.
 
 ## Installation
 

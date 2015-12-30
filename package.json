@@ -7,10 +7,10 @@
   "keywords": "hubot, hubot-scripts, michaelscott, the office, michael scott, michael, scott",
   "repository": {
     "type": "git",
-    "url": "git://github.com/hubot-scripts/hubot-michaelscott.git"
+    "url": "git://github.com/abhisharma2/hubot-michaelscott.git"
   },
   "bugs": {
-    "url": "https://github.com/hubot-scripts/hubot-michaelscott/issues"
+    "url": "https://github.com/abhisharma2/hubot-michaelscott/issues"
   },
   "dependencies": {},
   "peerDependencies": {
