@@ -44,10 +44,6 @@ module.exports = (robot) ->
   robot.respond /inspire me michaelscott/i, (res) ->
     res.reply res.random quotes
 
-  robot.respond /(gif me michaelscott)? (.+)/i, (msg) ->
-    gifMe msg, msg.match[3], (url) ->
-      msg.send url
-
   robot.respond /gif me michaelscott ?(.+)?/i, (msg) ->
     gifMe msg, msg.match[1]
 
