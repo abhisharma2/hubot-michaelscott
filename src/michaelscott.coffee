@@ -2,13 +2,14 @@
 #   Let Michael Scott interject during your most important business conversations
 #
 # Configuration:
-#
+#   HUBOT_GIPHY_API_KEY - Your Giphy developer API key / they have a public API key "dc6zaTOxFJmzC" if you want to test it out :)
 #
 # Commands:
-#   inspire me - gets a random and awesome Michael Scott quote
+#   inspire me michaelscott - gets a random and awesome Michael Scott quote
+#   gif me michaelscott <query> - gets an Office gif based on the message you pass in
 #
 # Notes:
-#   Michael Scott Gifs coming soon...
+#   Please email me, or post an issue in the Github repository if you want more features!
 #
 # Author:
 #   Abhi Sharma (abhisharma2)
@@ -37,8 +38,31 @@ module.exports = (robot) ->
   robot.hear /bankruptcy/i, (res) ->
     res.send "I. DECLARE. BANKRUPTCY!!"
 
-  robot.hear /large|huge|giant|all night/i, (res) ->
+  robot.hear /large|huge|giant|all night|enormous|vast|immense|large|big|great|massive|colossal|prodigious|gigantic|gargantuan|mammoth|monumental|giant|towering|elephantine|mountainous|monstrous|titanic|epic|Herculean|jumbo|mega|monster|king-size|economy-size|oversize|super-size|whopping|humongous/i|(res) ->
     res.send "That's what she said"
 
-  robot.respond /inspire me/i, (res) ->
+  robot.respond /inspire me michaelscott/i, (res) ->
     res.reply res.random quotes
+
+  robot.respond /(gif me michaelscott)? (.+)/i, (msg) ->
+    gifMe msg, msg.match[3], (url) ->
+      msg.send url
+
+  robot.respond /gif me michaelscott ?(.+)?/i, (msg) ->
+    gifMe msg, msg.match[1]
+
+  gifMe = (msg, query) ->
+    api = process.env.HUBOT_GIPHY_API_KEY || 'dc6zaTOxFJmzC'
+    query = query.replace(/\ /g, "+")
+    if !api
+      msg.send "Missing server environment variable HUBOT_GIPHY_API_KEY."
+      return
+    else
+      apiUrl = 'http://api.giphy.com/v1/gifs/translate?s=the+office+' + query + '&api_key=' + api
+      msg.http(apiUrl)
+        .get() (err, res, body) ->
+          result = JSON.parse(body)
+          if result.error
+            msg.send "#{result.error}"
+            return
+          if result.data.length == 0 then msg.send "We checked the Internet, couldn't find anything. Try a different search term, like 'bankruptcy'" else msg.send result.data.url
