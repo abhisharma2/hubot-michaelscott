@@ -38,27 +38,27 @@ module.exports = (robot) ->
   robot.hear /bankruptcy/i, (res) ->
     res.send "I. DECLARE. BANKRUPTCY!!"
 
-  robot.hear /large|huge|giant|all night|enormous|vast|immense|large|big|great|massive|colossal|prodigious|gigantic|gargantuan|mammoth|monumental|giant|towering|elephantine|mountainous|monstrous|titanic|epic|Herculean|jumbo|mega|monster|king-size|economy-size|oversize|super-size|whopping|humongous/i|(res) ->
+  robot.hear /large|huge|giant|all night|enormous|vast|immense|large|big|great|massive|colossal|prodigious|gigantic|gargantuan|mammoth|monumental|giant|towering|elephantine|mountainous|monstrous|titanic|epic|Herculean|jumbo|mega|monster|king-size|economy-size|oversize|super-size|whopping|humongous/i, (res) ->
     res.send "That's what she said"
+
+  robot.hear /gif me michaelscott ?(.+)?/i, (res) ->
+    gifMe res, res.match[1]
 
   robot.respond /inspire me michaelscott/i, (res) ->
     res.reply res.random quotes
 
-  robot.respond /gif me michaelscott ?(.+)?/i, (msg) ->
-    gifMe msg, msg.match[1]
-
-  gifMe = (msg, query) ->
+  gifMe = (res, query) ->
     api = process.env.HUBOT_GIPHY_API_KEY || 'dc6zaTOxFJmzC'
     query = query.replace(/\ /g, "+")
     if !api
-      msg.send "Missing server environment variable HUBOT_GIPHY_API_KEY."
+      res.send "Missing server environment variable HUBOT_GIPHY_API_KEY."
       return
     else
       apiUrl = 'http://api.giphy.com/v1/gifs/translate?s=the+office+' + query + '&api_key=' + api
-      msg.http(apiUrl)
+      res.http(apiUrl)
         .get() (err, res, body) ->
           result = JSON.parse(body)
           if result.error
-            msg.send "#{result.error}"
+            res.send "#{result.error}"
             return
-          if result.data.length == 0 then msg.send "We checked the Internet, couldn't find anything. Try a different search term, like 'bankruptcy'" else msg.send result.data.url
+          if result.data.length == 0 then res.send "We checked the Internet, couldn't find anything. Try a different search term, like 'bankruptcy'" else res.send result.data.url
